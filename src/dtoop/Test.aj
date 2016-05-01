@@ -1,10 +1,24 @@
 package dtoop;
 
 public aspect Test {
-	pointcut t() : within(TestClass.class);
+
+	pointcut toString() : call (String *.toString());
+
+	String around() : toString() {
+		String newToString = proceed();
+		return newToString.toLowerCase();
+	}
 	
-	before():  t() {
-		System.out.println(thisJoinPoint.getSignature());
+	pointcut getAge() : call (Integer *.getAge());
+	
+	Integer around() : getAge() {
+		return 45;
+	}
+	
+	pointcut getName() : call (String *.getName());
+	
+	String around() : getName() {
+		return "NAME";
 	}
 
 }
