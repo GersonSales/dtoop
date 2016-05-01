@@ -1,7 +1,10 @@
 package dtoop;
 
 public aspect Test {
-	public Test() {
-		// TODO Auto-generated constructor stub
+	pointcut t() : within(TestClass.class);
+	
+	before():  t() {
+		System.out.println(thisJoinPoint.getSignature());
 	}
+
 }
