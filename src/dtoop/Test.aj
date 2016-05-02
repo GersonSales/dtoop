@@ -1,30 +1,53 @@
 package dtoop;
 
+import java.util.ArrayList;
+
 public aspect Test {
+	private static Integer idEmployee = 1;
 
-	private pointcut noSet() : call (void Person+.set*(..));
-	
-	void around() : noSet() {
-		throw new IllegalAccessError("Acces denied!");
-	}
-	
-	private pointcut toString() : call (String *.toString());
+	private Integer Employee.idNumber;
 
-	String around() : toString() {
-		String newToString = proceed();
-		return newToString.toLowerCase();
+	public Integer Employee.getIdNumber() {
+		return this.idNumber;
 	}
 
-	private pointcut getAge() : call (Integer *.getAge());
+	declare error : call (ArrayList.new(..)) :"It is not allowed to use ArrayList";
 
-	Integer around() : getAge() {
-		return 45;
+	before() : call(ArrayList.new(..)) {
+		try {
+			throw new IllegalAccessError("It is not allowed to use ArrayList");
+		} catch (IllegalAccessError erro) {
+			erro.printStackTrace(System.out);
+			System.exit(0);
+		}
 	}
 
-	private pointcut getName() : call (String *.getName());
+	private pointcut newInstanceEmployee(Employee employee) : execution(Employee.new(..)) && this(employee);
 
-	String around() : getName() {
-		return "NAME";
+	after(Employee employee) : newInstanceEmployee(employee) {
+		employee.idNumber = idEmployee;
+		idEmployee++;
+	}
+
+	private pointcut toStringPlusId(Employee employee) : execution(String Employee.toString()) && this(employee);
+
+	String around(Employee employee) : toStringPlusId(employee)  {
+		String toStringWithId = proceed(employee);
+		return toStringWithId.concat(" ID: " + employee.getIdNumber());
+	}
+
+	private pointcut addPermission(Employee employee, Permission permission) : 
+		execution (void Employee.addPermission(Permission)) && target(employee) && args(permission);
+
+	before(Employee employee, Permission permission) : addPermission(employee, permission) {
+		System.out.println("The permission '" + permission + "' was added to " + employee.getName() + ".");
+	}
+
+	private pointcut zpermissionsToString() : execution (String Employee.permissionsToString());
+
+	String around(): zpermissionsToString() {
+		String permissions = proceed();
+		return permissions.equals("") ? "No permissions!" : permissions;
 	}
 
 }

@@ -2,21 +2,19 @@ package dtoop;
 
 public class Client {
 
-	public static void main(String[] args) {
-		try {
-			
-		Person gerson = new Employee("Gerson", 21);
+	public static void main(String[] args) throws InstantiationException, IllegalAccessException {
 		
-		System.out.println(gerson);
+		 Employee firstEmployee = new Employee("First Employee", 21);
+		 Employee secondEmployee = new Employee("Second Employee", 52);
 		
-		String string = new String("TESTING THE LOWER CASE");
+		 System.out.println(firstEmployee);
+		 System.out.println(secondEmployee);
 		
-		System.out.println(string);
+		 System.out.println(firstEmployee.permissionsToString());
 		
-		gerson.setAge(124);
-		}catch (IllegalAccessError error){
-			System.out.println(error.getMessage() + "<---");
-		}
+		 firstEmployee.addPermission(Permission.DELETE_EMPLOYEE);
+		
+		 System.out.println(firstEmployee.permissionsToString());
 
 	}
 
