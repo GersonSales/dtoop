@@ -1,5 +1,7 @@
 package dtoop;
 
+import dtoop.Employee;
+
 public class Client {
 
 	public static void main(String[] args) throws InstantiationException, IllegalAccessException {
