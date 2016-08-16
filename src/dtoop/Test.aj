@@ -11,6 +11,12 @@ public aspect Test {
 		return this.idNumber;
 	}
 
+//	declare error : staticinitialization(Client)  && whitin(Type): "Cannot use Cliente class";
+	
+	before() : staticinitialization(Permission) && within(Enum) {
+		
+	}
+
 	declare error : call (ArrayList.new(..)) :"It is not allowed to use ArrayList";
 
 	before() : call(ArrayList.new(..)) {

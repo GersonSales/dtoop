@@ -1,5 +1,6 @@
 package dtoop;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -10,7 +11,7 @@ public class Employee extends Person{
 	public Employee(String name, Integer age) {
 		super(name, age);
 		
-		this.permissions = new LinkedList<>();
+		this.permissions = new ArrayList<>();
 	}
 
 	public void addPermission(Permission permission) {
