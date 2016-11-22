@@ -1,1 +1,1 @@
-Criação de arquivo com conflito
+Criação de arquivo com conflito em outro branch
