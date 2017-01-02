@@ -12,7 +12,7 @@ getUserLogin() {
 
 getUserEmail() {
     userEmail=""
-    until [[ $userEmail == *"home"* ]]
+    until [[ $userEmail == *"ccc.ufcg.edu.br"* ]]
     do
         userEmail=$(dialog --no-cancel --title "$title" --inputbox "Digite seu email institucional:" 10 35 --stdout)
     done
@@ -47,17 +47,20 @@ persistUserData() {
 
 }
 
+createFile() {
+    if [ ! -e $1 ]
+    then
+        touch $1
+        echo "login=$(whoami)" > $1
+        echo "email=" >> $1
+    fi
+}
+
 homeUser=/home/"$(whoami)"
-directory="$homeUser"/login_email
+path=".login_email"
+directory="$homeUser"/$path
 
-findResult=$(find /home/ -type f -size -8k 2>/dev/null | grep "login_email")
-
-if [ $? -eq 1 ]
-then
-    touch $directory
-    echo "login=$(whoami)" > $directory
-    echo "email=" >> $directory
-fi
+createFile $directory
 
 emailField=$(grep "email=" "$directory")
 
