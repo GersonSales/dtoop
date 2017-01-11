@@ -14,24 +14,17 @@ import java.util.List;
  * Created by gersonsales on 06/01/17.
  */
 public class DAO {
-    private static Connection connection;
+    private Connection connection;
 
-    static  {
-        connection = ConnectionFactory.getConnection();
+    public DAO(Connection connection) {
+        this.connection = connection;
     }
 
-    public DAO() {
+    private Connection getConnection() {
+        return this.connection;
     }
 
-    public List<Contact> getContactss() {
-        return DAO.getContacts();
-    }
-
-    private static Connection getConnection() {
-        return connection;
-    }
-
-    public static void addContact(Contact contact) {
+    public void addContact(Contact contact) {
         try {
             @Language("SQL")
             String sqlCommand = "INSERT INTO contacts (name, age, email) VALUES (?, ?, ?)";
@@ -49,7 +42,7 @@ public class DAO {
         }
     }
 
-    public static List<Contact> getContacts() {
+    public List<Contact> getContacts() {
         try {
             List<Contact> contacts = new ArrayList<>();
 
@@ -81,7 +74,7 @@ public class DAO {
 
     }
 
-    public static void removeContact(Contact contact) {
+    public void removeContact(Contact contact) {
         try {
             @Language("SQL")
             String sqlCommand = "DELETE FROM contacts WHERE id=?";
@@ -98,7 +91,7 @@ public class DAO {
         }
     }
 
-    public static void updateContact(Contact contact) {
+    public void updateContact(Contact contact) {
         try {
             @Language("SQL")
             String sqlCommand = "UPDATE contacts SET name=?, age=?, email=? WHERE id=?";
@@ -117,7 +110,7 @@ public class DAO {
         }
     }
 
-    public static Contact searchById(Long id) {
+    public Contact searchById(Long id) {
         try {
             @Language("SQL")
             String sqlCommand = "SELECT * FROM contacts WHERE id=?";

@@ -7,13 +7,14 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 /**
  * Created by gersonsales on 07/01/17.
  */
 @WebServlet("/mvc")
 public class ServletController extends HttpServlet {
-    protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException {
+    protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String param = request.getParameter("logic");
         String className = "caelum.mvc.logic." + param;
 

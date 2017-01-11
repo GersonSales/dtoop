@@ -6,6 +6,8 @@ import caelum.database.DAO;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.net.ConnectException;
+import java.sql.Connection;
 
 /**
  * Created by gersonsales on 07/01/17.
@@ -21,7 +23,10 @@ public class AddContactLogic implements Logic {
 
         Contact contact = new Contact(name, age, email);
 
-        DAO.addContact(contact);
+        Connection connection = (Connection) request.getAttribute("connection");
+        DAO dao = new DAO(connection);
+
+        dao.addContact(contact);
 
         return "mvc?logic=ContactsListLogic";
     }

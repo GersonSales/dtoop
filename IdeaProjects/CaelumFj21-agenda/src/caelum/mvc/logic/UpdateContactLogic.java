@@ -1,22 +1,26 @@
 package caelum.mvc.logic;
 
 import caelum.contact.Contact;
+import caelum.database.ConnectionFactory;
 import caelum.database.DAO;
 
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.LongSummaryStatistics;
+import java.sql.Connection;
 
 /**
  * Created by gersonsales on 07/01/17.
  */
 
 public class UpdateContactLogic implements Logic{
+    private DAO dao;
+
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        Connection connection = (Connection) request.getAttribute("connection");
+        dao = new DAO(connection);
 
         if (request.getParameter("status").equals("toUpdate")) {
             showUpdatePage(request, response);
@@ -36,15 +40,16 @@ public class UpdateContactLogic implements Logic{
         String email = request.getParameter("email");
 
         Contact contact = new Contact(name, age, email);
+
         contact.setId(id);
-        DAO.updateContact(contact);
+        this.dao.updateContact(contact);
 
     }
 
     private void showUpdatePage(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Long id = Long.parseLong(request.getParameter("id"));
 
-        Contact contact = DAO.searchById(id);
+        Contact contact = this.dao.searchById(id);
 
         request.setAttribute("id", id);
         request.setAttribute("name", contact.getName());
