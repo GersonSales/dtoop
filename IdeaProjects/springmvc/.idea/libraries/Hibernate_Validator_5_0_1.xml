@@ -11,6 +11,8 @@
       <root url="jar://$PROJECT_DIR$/javaBeansModule/lib/classmate-0.8.0.jar!/" />
     </CLASSES>
     <JAVADOC />
-    <SOURCES />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.ideaLibSources/validation-api-1.1.0.Final-sources.jar!/" />
+    </SOURCES>
   </library>
 </component>

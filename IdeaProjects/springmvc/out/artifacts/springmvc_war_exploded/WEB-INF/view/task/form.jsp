@@ -14,11 +14,12 @@
 <body>
     <h1>Add task</h1>
 
-    <form:errors path="*"/>
+    <form:errors path="task.description" cssStyle="color: red"/>
     <form action="addTask" method="post">
         Description<br/>
         <textarea name="description" rows="5" cols="100"></textarea><br/>
-        <input type="submit" value="addTask">
+        <input type="submit" value="Add task">
+
 
     </form>
 

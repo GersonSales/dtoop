@@ -14,6 +14,7 @@
 <body>
     <fmt:message var="task.added.successfully"/>
     <h1>Task has been added successfully!</h1>
-
+    <a href="/newTask">New Task</a>
+    <a href="/tasksList">Tasks list</a>
 </body>
 </html>
