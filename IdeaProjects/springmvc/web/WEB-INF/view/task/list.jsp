@@ -15,6 +15,7 @@
     <title>Tasks list</title>
 </head>
 <body>
+    <c:import url="menuBar.jsp"/>
     <script type="text/javascript" >
         function checkNow(id) {
             $.get("checkTask", {'id': id}, function (response) {
@@ -22,11 +23,6 @@
             })
         }
     </script>
-
-    <a href="/newTask">Create a new task</a>
-
-
-
 
     <table align="center">
         <tr align="center">

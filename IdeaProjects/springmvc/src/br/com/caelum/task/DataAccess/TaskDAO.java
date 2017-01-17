@@ -2,7 +2,10 @@ package br.com.caelum.task.DataAccess;
 
 import br.com.caelum.task.logic.Task;
 import org.intellij.lang.annotations.Language;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
+import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -11,12 +14,18 @@ import java.util.List;
 /**
  * Created by gersonsales on 12/01/17.
  */
-public class DAO {
+@Repository
+public class TaskDAO {
 
     private Connection connection;
 
-    public DAO() {
-        this.connection = ConnectionFactory.getConnection();
+    @Autowired
+    public TaskDAO(DataSource dataSource) {
+        try {
+            this.connection = dataSource.getConnection();
+        }catch (SQLException error) {
+            throw new RuntimeException(error);
+        }
     }
 
     private Connection getConnection() {
