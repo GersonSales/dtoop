@@ -3,6 +3,7 @@ package br.com.caelum.task.logic;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.Calendar;
@@ -11,7 +12,11 @@ import java.util.Calendar;
 /**
  * Created by gersonsales on 11/01/17.
  */
+@Entity
+@Table(name = "tasks")
 public class Task {
+    @Id
+    @GeneratedValue
     private Long id;
 
     @NotNull(message="{empty.description}")
@@ -21,6 +26,7 @@ public class Task {
     private boolean checked;
 
     @DateTimeFormat(pattern = "dd/MM/yyyy")
+    @Temporal(TemporalType.DATE)
     private Calendar checkDate;
 
     public Long getId() {
