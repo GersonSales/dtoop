@@ -12,7 +12,6 @@
     <title>Title</title>
 </head>
 <body>
-
     <c:import url="menuBar.jsp"/>
     <h2>Welcome ${loggedUser.login}</h2>
 </body>

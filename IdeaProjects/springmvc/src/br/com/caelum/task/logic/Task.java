@@ -13,7 +13,6 @@ import java.util.Calendar;
  * Created by gersonsales on 11/01/17.
  */
 @Entity
-@Table(name = "tasks")
 public class Task {
     @Id
     @GeneratedValue
