@@ -50,16 +50,9 @@ public abstract class Task {
         return creationDate;
     }
 
-    public void setCreationDate(Calendar creationDate) {
-        this.creationDate = creationDate;
-    }
-
     public Calendar getCheckDate() {
         return checkDate;
     }
 
-    public void setCheckDate(Calendar checkDate) {
-        this.checkDate = checkDate;
-    }
 
 }

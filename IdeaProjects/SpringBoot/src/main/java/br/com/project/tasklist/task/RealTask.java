@@ -20,5 +20,23 @@ public class RealTask extends Task{
         this.subTaskList = new ArrayList<>();
     }
 
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
+    public Priority getPriority() {
+        return priority;
+    }
+
+    public void setPriority(Priority priority) {
+        this.priority = priority;
+    }
+
+
+
 
 }
