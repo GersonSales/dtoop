@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 @EnableAutoConfiguration
 public class HelloWorld {
-    @RequestMapping("/home")
+    @RequestMapping("/")
     @ResponseBody
     String home() {
             return "Hello World!";
