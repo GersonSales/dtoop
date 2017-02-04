@@ -1,0 +1,5 @@
+CREATE TABLE taskss(
+  id BIGINT NOT NULL,
+  title VARCHAR(255) NOT NULL,
+  PRIMARY KEY (id)
+);

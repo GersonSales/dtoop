@@ -2,14 +2,26 @@ group 'SpringBoot'
 version '1.0-SNAPSHOT'
 
 apply plugin: 'java'
+apply plugin: 'idea'
+
+jar {
+    baseName = 'gs-accessing-data-jpa'
+    version =  '0.1.0'
+}
 
 sourceCompatibility = 1.8
+targetCompatibility = 1.8
 
 repositories {
     mavenCentral()
+    maven { url "http://repo.spring.io/snapshot" }
+    maven { url "http://repo.spring.io/milestone" }
+
 }
 
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.11'
-    compile("org.springframework.boot:spring-boot-starter-web:1.5.1.RELEASE")
+    compile("org.springframework.boot:spring-boot-starter-web:1.5.1.RELEASE");
+    compile('org.springframework.boot:spring-boot-starter-data-jpa:1.1.6.RELEASE');
+    compile('com.h2database:h2:1.4.191');
 }
