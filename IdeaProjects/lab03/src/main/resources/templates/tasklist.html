@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Task List</title>
+</head>
+<body>
+    <h1>Task List</h1>
+    <table>
+        <thead>
+            <td>ID</td>
+            <td>Name</td>
+            <td>Description</td>
+            <td>isChecked</td>
+            <td>Category</td>
+            <td>Priority</td>
+            <td>Creation Date</td>
+            <td>Action</td>
+            <td>Action</td>
+        </thead>
+
+        <tbody>
+            <tr th:each="task : ${taskList}">
+                <td th:text="${task.id}"></td>
+                <td th:text="${task.title}"></td>
+                <td th:text="${task.description}"></td>
+                <td th:text="${task.checked}"></td>
+                <td th:text="${task.category}"></td>
+                <td th:text="${task.priority}"></td>
+                <td th:text="${task.creationDate}"></td>
+
+                <td><a th:href="@{'/task/showRealTask?id=' + ${task.id}}">Edit</a></td>
+                <td><a th:href="@{'/task/removeRealTask?id=' + ${task.id}}">Remove</a></td>
+
+            </tr>
+
+        </tbody>
+
+
+    </table>
+
+</body>
+</html>

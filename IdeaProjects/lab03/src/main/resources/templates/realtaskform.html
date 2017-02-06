@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml"
+      xmlns:form="http://www.w3.org/1999/html">
+<head>
+    <!--<meta charset="UTF-8"/>-->
+    <title>Real Task Form</title>
+</head>
+<body>
+
+    <form th:action="@{addRealTask}" method="post">
+        <input type="hidden" name="id"/>
+        <input type="text" placeholder="Title" name="title"/>
+        <textarea name="description">Description</textarea>
+
+        <select name="bankName">
+            <option th:each="bank : ${bankNames}" th:value="${bank}" th:text="${bank}"></option>
+        </select>
+
+        <select name="category">
+            <option value="NONE" selected="">Category</option>
+
+            <option value="WORK">Work</option>
+            <option value="STUDY">Study</option>
+        </select>
+
+
+        <select name="priority">
+            <!--disabled=""-->
+            <option value="NONE" selected="">Priority</option>
+
+            <option value="LOW">Low</option>
+            <option value="MEDIUM">Medium</option>
+            <option value="HIGH">High</option>
+
+        </select>
+
+
+        <input type="submit" value="Save"/>
+    </form>
+
+
+</body>
+</html>
