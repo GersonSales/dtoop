@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Category Menu</title>
+</head>
+<body>
+    <div th:fragment="categoryMenu">
+        <ul>
+            <li th:each="categorty : ${categoryList}"><a th:href="@{'task/taskList?category=' + ${category}}" th:text="${category}"></a></li>
+        </ul>
+    </div>
+</body>
+</html>

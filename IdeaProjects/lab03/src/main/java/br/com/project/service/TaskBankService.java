@@ -4,6 +4,7 @@ import br.com.project.model.task.RealTask;
 import br.com.project.model.task.Task;
 import br.com.project.model.task.TaskBank;
 import br.com.project.repository.TaskBankRepository;
+import com.sun.org.apache.regexp.internal.RE;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,7 +35,6 @@ public class TaskBankService {
     public List<Task> getAllTasks() {
         List<Task> allTasks = new ArrayList<>();
         for (TaskBank taskBank : taskBankRepository.findAll()){
-            System.out.println("<-----------" + taskBank + "----------->");
             allTasks.addAll(taskBank.getAllTasks());
         }
         return allTasks;
@@ -79,7 +79,21 @@ public class TaskBankService {
     }
 
 
+    public List<Task> getTasksByBank(String bankName) {
+        return taskBankRepository.findByName(bankName).getAllTasks();
+    }
 
+    public List<Task> getTasksByCategory(String category) {
+        List<Task> result = new ArrayList<>();
+        for (Task task : getAllTasks()) {
+            if (task instanceof RealTask) {
+                RealTask realTask = (RealTask)task;
+                if (realTask.isThatCategory(category)) {
+                    result.add(realTask);
+                }
+            }
+        }
 
-
+        return result;
+    }
 }

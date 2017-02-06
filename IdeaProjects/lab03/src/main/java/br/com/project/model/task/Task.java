@@ -82,4 +82,6 @@ public abstract class Task {
     public void setCheckDate(Calendar checkDate) {
         this.checkDate = checkDate;
     }
+
+
 }

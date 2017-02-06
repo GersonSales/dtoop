@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import javax.persistence.PreUpdate;
 import java.util.Set;
 
 /**
@@ -25,6 +26,20 @@ public class TaskController {
     @RequestMapping(value = "/taskList", method = RequestMethod.GET)
     public String taskList(Model model) {
         model.addAttribute("taskList", taskBankService.getAllTasks());
+        return "tasklist";
+    }
+
+    @RequestMapping(value = "/taskListByBank", method = RequestMethod.GET)
+    public String taskListByBank(String bankName, Model model) {
+        model.addAttribute("taskList", taskBankService.getTasksByBank(bankName));
+
+        return "tasklist";
+    }
+
+    @RequestMapping(value = "/taskListByCategory", method = RequestMethod.GET)
+    public String taskListByCategory(String category, Model model) {
+        model.addAttribute("categoryList", taskBankService.getTasksByCategory(category));
+
         return "tasklist";
     }
 
@@ -65,9 +80,16 @@ public class TaskController {
     @RequestMapping(value = "/addTaskBank", method = RequestMethod.POST)
     public String addTaskBank(String bankName) {
         taskBankService.addBank(bankName);
-        return "redirect:/task/taskList";
+        return "redirect:/task/taskBankList";
 
     }
+
+    @RequestMapping(value = "/taskBankList", method = RequestMethod.GET)
+    public String taskBankList(Model model) {
+        model.addAttribute("taskBankList", taskBankService.getBankNames());
+        return "taskbanklist";
+    }
+
 
 
 }

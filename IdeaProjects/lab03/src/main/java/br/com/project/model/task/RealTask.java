@@ -12,15 +12,15 @@ public class RealTask extends Task{
     private Category category;
     private Priority priority;
 
-//    @OneToMany(cascade = {CascadeType.ALL})
-//    private List<SubTask> subTaskList;
+    @OneToMany(cascade = {CascadeType.ALL})
+    private List<SubTask> subTaskList;
 
     public RealTask(String title, String description, Category category, Priority priority) {
         super(title, description);
         this.category = category;
         this.priority = priority;
 
-//        this.subTaskList = new ArrayList<>();
+        this.subTaskList = new ArrayList<>();
     }
 
     public RealTask() {}
@@ -44,5 +44,9 @@ public class RealTask extends Task{
     @Override
     public String toString() {
         return "Task type: Real Task";
+    }
+
+    public boolean isThatCategory(String category) {
+        return getCategory().toString().equalsIgnoreCase(category);
     }
 }
