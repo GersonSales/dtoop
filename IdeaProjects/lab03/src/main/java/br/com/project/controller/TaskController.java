@@ -1,15 +1,19 @@
 package br.com.project.controller;
 
 import br.com.project.model.task.RealTask;
+import br.com.project.model.task.Task;
 import br.com.project.service.TaskBankService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 
-import javax.persistence.PreUpdate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -22,40 +26,95 @@ public class TaskController {
     @Autowired
     private TaskBankService taskBankService;
 
+    private List<Task> taskList;
+
+    public TaskController() {
+        this.taskList = new ArrayList<>();
+    }
+
+    @ModelAttribute("taskList")
+    List<Task> getTaskList() {
+        return this.taskList;
+    }
+
+    void setTaskList(List<Task> taskList) {
+        this.taskList.clear();
+        this.taskList.addAll(taskList);
+    }
+
+    @RequestMapping(value = "", method = RequestMethod.GET)
+    public String taskIndex() {
+        return "redirect:/task/allTasks";
+    }
 
     @RequestMapping(value = "/taskList", method = RequestMethod.GET)
-    public String taskList(Model model) {
-        model.addAttribute("taskList", taskBankService.getAllTasks());
+    public String taskList(ModelMap model) {
+        model.addAttribute("categoryList", taskBankService.getCategories());
+        model.addAttribute("priorityList", taskBankService.getPriorities());
+        model.addAttribute("taskBankList", taskBankService.getBankNames());
+        model.addAttribute("priorityList", taskBankService.getPriorities());
+
         return "tasklist";
+    }
+
+    @RequestMapping(value = "/allTasks", method = RequestMethod.GET)
+    public String allTasks(ModelMap model) {
+        setTaskList(taskBankService.getAllTasks());
+        return "redirect:/task/taskList";
     }
 
     @RequestMapping(value = "/taskListByBank", method = RequestMethod.GET)
     public String taskListByBank(String bankName, Model model) {
-        model.addAttribute("taskList", taskBankService.getTasksByBank(bankName));
+        setTaskList(taskBankService.getTasksByBank(bankName));
 
-        return "tasklist";
+        return "redirect:/task/taskList";
     }
 
     @RequestMapping(value = "/taskListByCategory", method = RequestMethod.GET)
     public String taskListByCategory(String category, Model model) {
-        model.addAttribute("categoryList", taskBankService.getTasksByCategory(category));
+        setTaskList(taskBankService.getTasksByCategory(category));
+        return "redirect:/task/taskList";
+    }
 
-        return "tasklist";
+
+    @RequestMapping(value = "/taskListByPriority", method = RequestMethod.GET)
+    public String taskListByPriority(String priority, Model model) {
+        setTaskList(taskBankService.getTasksByPriority(priority));
+
+        return "redirect:/task/taskList";
     }
 
     @RequestMapping(value = "/newRealTask", method = RequestMethod.GET)
     public String newTask(Model model) {
         Set<String> bankNames = taskBankService.getBankNames();
+        Set<String> categoryList = taskBankService.getCategories();
 
         model.addAttribute("bankNames", bankNames);
+        model.addAttribute("categoryList", categoryList);
         return "realtaskform";
     }
 
+    @RequestMapping(value = "/newCategory", method = RequestMethod.GET)
+    public String newCategory(Model model) {
+        return "categoryform";
+    }
+
+    @RequestMapping(value = "/addCategory", method = RequestMethod.POST)
+    public String addCategory(String category) {
+        taskBankService.addCategory(category);
+        return "redirect:/task/allTasks";
+
+    }
+
     @RequestMapping(value = "/addRealTask", method = RequestMethod.POST)
-    public String addTask(@ModelAttribute RealTask task, String bankName, Model  model) {
+    public String addTask(@ModelAttribute RealTask task, String bankName, String subtask, Model  model) {
+
+        System.out.println("########" + model.containsAttribute("subtask"));
+        System.out.println("########" + subtask);
+
         taskBankService.addTask(bankName, task);
 
-        return "redirect:/task/taskList";
+        return "redirect:/task/allTasks";
     }
 
     @RequestMapping(value = "/showRealTask", method = RequestMethod.GET)
@@ -67,8 +126,7 @@ public class TaskController {
     @RequestMapping(value = "/removeRealTask", method = RequestMethod.GET)
     public String removeRealTask(Long id) {
         taskBankService.removeTask(id);
-//        taskService.removeTask(id);
-        return "redirect:/task/taskList";
+        return "redirect:/task/allTasks";
     }
 
 
@@ -80,16 +138,9 @@ public class TaskController {
     @RequestMapping(value = "/addTaskBank", method = RequestMethod.POST)
     public String addTaskBank(String bankName) {
         taskBankService.addBank(bankName);
-        return "redirect:/task/taskBankList";
+        return "redirect:/task/allTasks";
 
     }
-
-    @RequestMapping(value = "/taskBankList", method = RequestMethod.GET)
-    public String taskBankList(Model model) {
-        model.addAttribute("taskBankList", taskBankService.getBankNames());
-        return "taskbanklist";
-    }
-
 
 
 }

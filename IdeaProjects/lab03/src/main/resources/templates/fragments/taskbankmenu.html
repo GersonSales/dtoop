@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Task Bank List</title>
+</head>
+<body>
+<h1>Task Bank List</h1>
+
+    <div th:fragment="taskBankMenu">
+        <ul>
+            <li>Task Bank <a th:href="@{'/task/newTaskBank'}" th:text="'+'"></a></li>
+            <li th:each="taskBank : ${taskBankList}"><a th:href="@{'/task/taskListByBank?bankName=' + ${taskBank}}" th:text="${taskBank}"></a></li>
+        </ul>
+    </div>
+</body>
+</html>

@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml"
-      xmlns:form="http://www.w3.org/1999/html">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <!--<meta charset="UTF-8"/>-->
     <title>Real Task Form</title>
     <th:block th:include="fragments/menu :: menu"></th:block>
+    <script src="../static/js/functions.js.js" th:href="@{/js/functions.js}"></script>
+
 
 </head>
 <body>
@@ -19,10 +20,7 @@
         </select>
 
         <select name="category">
-            <option value="NONE" selected="">Category</option>
-
-            <option value="WORK">Work</option>
-            <option value="STUDY">Study</option>
+            <option th:each="category : ${categoryList}" th:value="${category}" th:text="${category}"></option>
         </select>
 
 
@@ -36,10 +34,11 @@
 
         </select>
 
+        <th:block th:include="fragments/subtaskform :: subTaskForm"></th:block>
+
 
         <input type="submit" value="Save"/>
     </form>
-
 
 </body>
 </html>

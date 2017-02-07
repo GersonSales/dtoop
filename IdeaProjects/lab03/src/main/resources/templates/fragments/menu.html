@@ -9,15 +9,13 @@
     <div th:fragment="menu">
 
         <ul>
-            <li><a th:href="@{taskList}" th:text="taskList"></a></li>
+            <li><a th:href="@{allTasks}" th:text="taskList"></a></li>
             <li><a th:href="@{taskBankList}" th:text="taskBankList"></a></li>
             <li><a th:href="@{newRealTask}" th:text="newRealTask"></a></li>
             <li><a th:href="@{newTaskBank}" th:text="newTaskBank"></a></li>
         </ul>
 
     </div>
-
-    <th:block th:include="categorymenu :: categorymenu"></th:block>
 
 
 </body>

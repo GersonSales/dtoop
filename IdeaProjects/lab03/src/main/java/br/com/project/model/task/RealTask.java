@@ -9,13 +9,13 @@ import java.util.List;
  */
 @Entity
 public class RealTask extends Task{
-    private Category category;
+    private String category;
     private Priority priority;
 
     @OneToMany(cascade = {CascadeType.ALL})
     private List<SubTask> subTaskList;
 
-    public RealTask(String title, String description, Category category, Priority priority) {
+    public RealTask(String title, String description, String category, Priority priority) {
         super(title, description);
         this.category = category;
         this.priority = priority;
@@ -23,13 +23,16 @@ public class RealTask extends Task{
         this.subTaskList = new ArrayList<>();
     }
 
-    public RealTask() {}
+    public RealTask() {
+        this.category = "";
+        this.priority = Priority.NONE;
+    }
 
-    public Category getCategory() {
+    public String getCategory() {
         return category;
     }
 
-    public void setCategory(Category category) {
+    public void setCategory(String category) {
         this.category = category;
     }
 
@@ -48,5 +51,9 @@ public class RealTask extends Task{
 
     public boolean isThatCategory(String category) {
         return getCategory().toString().equalsIgnoreCase(category);
+    }
+
+    public boolean isThatPriority(String priority) {
+        return getPriority().toString().equalsIgnoreCase(priority);
     }
 }

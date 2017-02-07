@@ -1,17 +1,11 @@
 package br.com.project.service;
 
-import br.com.project.model.task.RealTask;
-import br.com.project.model.task.Task;
-import br.com.project.model.task.TaskBank;
+import br.com.project.model.task.*;
 import br.com.project.repository.TaskBankRepository;
-import com.sun.org.apache.regexp.internal.RE;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Created by gersonsales on 06/02/17.
@@ -21,6 +15,12 @@ public class TaskBankService {
 
     @Autowired
     private TaskBankRepository taskBankRepository;
+
+    private Set<String> categoryList;
+
+    public TaskBankService() {
+        this.categoryList = new HashSet<>();
+    }
 
     public void addBank(String bankName) {
         TaskBank taskBank = new TaskBank(bankName);
@@ -74,13 +74,15 @@ public class TaskBankService {
     public void removeTask(Long id) {
         for (TaskBank taskBank : taskBankRepository.findAll()) {
             taskBank.removeTask(id);
+            taskBankRepository.save(taskBank);
         }
 
     }
 
 
     public List<Task> getTasksByBank(String bankName) {
-        return taskBankRepository.findByName(bankName).getAllTasks();
+        TaskBank taskBank = taskBankRepository.findByName(bankName);
+        return taskBank.getAllTasks();
     }
 
     public List<Task> getTasksByCategory(String category) {
@@ -94,6 +96,31 @@ public class TaskBankService {
             }
         }
 
+        return result;
+    }
+
+    public void addCategory(String category) {
+        categoryList.add(category);
+    }
+
+    public Set<String> getCategories() {
+        return categoryList;
+    }
+
+    public List<Priority> getPriorities() {
+        return Arrays.asList(Priority.values());
+    }
+
+    public List<Task> getTasksByPriority(String priority) {
+        List<Task> result = new ArrayList<>();
+        for (Task task : getAllTasks()) {
+            if (task instanceof RealTask) {
+                RealTask realTask = (RealTask)task;
+                if (realTask.isThatPriority(priority)) {
+                    result.add(realTask);
+                }
+            }
+        }
         return result;
     }
 }

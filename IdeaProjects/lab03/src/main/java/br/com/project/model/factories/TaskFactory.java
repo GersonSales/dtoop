@@ -8,10 +8,10 @@ import br.com.project.model.task.*;
 public class TaskFactory {
 
     public static Task createRealTask(String title, String description, String categoryStr, String priorityStr) {
-        Category category = Category.valueOf(categoryStr);
+//        Category category = null;//CategoryBank.valueOf(categoryStr);
         Priority priority = Priority.valueOf(priorityStr);
 
-        Task realTask = new RealTask(title, description, category, priority);
+        Task realTask = new RealTask(title, description, "", priority);
 
         return realTask;
     }

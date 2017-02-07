@@ -19,6 +19,7 @@ public class TaskBank {
     private List<Task> taskList;
 
 
+
     public TaskBank() {
         this.taskList = new ArrayList<>();
     }
@@ -54,12 +55,16 @@ public class TaskBank {
         }
     }
 
+
+
     public List<Task> getAllTasks() {
         return taskList;
     }
 
     public void removeTask(Long id) {
-        taskList.remove(getTaskById(id));
+        Task foundTask = getTaskById(id);
+        System.out.println("<-------" + foundTask + "-------->");
+        taskList.remove(foundTask);
     }
 
     public String getName() {
