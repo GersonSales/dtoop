@@ -141,5 +141,11 @@ public class TaskController {
 
     }
 
+    @RequestMapping(value = "/contactUs", method = RequestMethod.GET)
+    public String addTaskBank() {
+        return "contactus";
+
+    }
+
 
 }
