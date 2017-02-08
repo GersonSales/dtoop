@@ -11,21 +11,30 @@ import java.util.List;
 public class RealTask extends Task{
     private String category;
     private Priority priority;
+    private String description;
+
 
     @OneToMany(cascade = {CascadeType.ALL})
     private List<SubTask> subTaskList;
 
     public RealTask(String title, String description, String category, Priority priority) {
-        super(title, description);
+        super(title);
         this.category = category;
         this.priority = priority;
-
-        this.subTaskList = new ArrayList<>();
     }
 
     public RealTask() {
         this.category = "";
         this.priority = Priority.NONE;
+        this.subTaskList = new ArrayList<>();
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getCategory() {
@@ -46,7 +55,12 @@ public class RealTask extends Task{
 
     @Override
     public String toString() {
-        return "Task type: Real Task";
+        return "RealTask{" +
+                "category='" + category + '\'' +
+                ", priority=" + priority +
+                ", description='" + description + '\'' +
+                ", subTaskList=" + subTaskList +
+                '}';
     }
 
     public boolean isThatCategory(String category) {
@@ -55,5 +69,17 @@ public class RealTask extends Task{
 
     public boolean isThatPriority(String priority) {
         return getPriority().toString().equalsIgnoreCase(priority);
+    }
+
+    public void addAllSubTask(List<SubTask> subTaskList) {
+        this.subTaskList.addAll(subTaskList);
+    }
+
+    public List<SubTask> getSubTaskList() {
+        return subTaskList;
+    }
+
+    public void setSubTaskList(List<SubTask> subTaskList) {
+        this.subTaskList = subTaskList;
     }
 }

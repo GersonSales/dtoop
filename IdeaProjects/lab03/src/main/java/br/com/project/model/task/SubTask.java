@@ -7,7 +7,10 @@ import javax.persistence.Entity;
  */
 @Entity
 public class SubTask extends Task{
-    public SubTask(String title, String description) {
-        super(title, description);
+    public SubTask(String title) {
+        super(title);
+    }
+
+    public SubTask() {
     }
 }

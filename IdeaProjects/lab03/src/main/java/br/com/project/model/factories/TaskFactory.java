@@ -2,6 +2,9 @@ package br.com.project.model.factories;
 
 import br.com.project.model.task.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by gersonsales on 04/02/17.
  */
@@ -16,8 +19,19 @@ public class TaskFactory {
         return realTask;
     }
 
-    public static Task createSubTask(String title, String description) {
-        Task subTask = new SubTask(title, description);
+    public static Task createSubTask(String title) {
+        Task subTask = new SubTask(title);
         return subTask;
+    }
+
+    public static List<SubTask> getSubTaskList(String subtask) {
+        subtask.replace(", ", ",");
+        String[] subtaskString = subtask.split(",");
+        List<SubTask> subTaskList = new ArrayList<>();
+        for (String subtaskStr : subtaskString) {
+            subTaskList.add(new SubTask(subtaskStr));
+        }
+
+        return subTaskList;
     }
 }

@@ -1,5 +1,6 @@
 package br.com.project.repository;
 
+import br.com.project.model.task.RealTask;
 import br.com.project.model.task.TaskBank;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -10,4 +11,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface TaskBankRepository extends JpaRepository<TaskBank, Long>{
     public TaskBank findByName(String bankName);
+
+    void save(RealTask realTask);
 }

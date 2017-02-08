@@ -6,8 +6,24 @@
     <th:block th:include="fragments/menu :: menu"></th:block>
 </head>
 <body>
-    <h2>Show Real Task</h2>
-    <b th:text="${realTask}"></b>
+    <h2>
+        [<label th:text="${realTask.category}"></label>]
+        <label th:text="${realTask.title}"></label>
+        <input type="checkbox" th:checked="${realTask.checked}"/>
+        <label th:text="${realTask.priority}"></label>
+    </h2>
+    <label th:text="${realTask.creationDate}"></label>
+
+
+    <hr/>
+    <h4 th:text="${realTask.description}"></h4>
+    <hr/>
+    <ul>
+        <li th:each="subTask : ${realTask.subTaskList}">
+            <label th:text="${subTask.title}"></label>
+            <input type="checkbox" name="name" th:checked="${subTask.checked}"/>
+        </li>
+    </ul>
 
 </body>
 </html>

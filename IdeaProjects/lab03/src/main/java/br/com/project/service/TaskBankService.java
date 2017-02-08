@@ -1,5 +1,6 @@
 package br.com.project.service;
 
+import br.com.project.model.factories.TaskFactory;
 import br.com.project.model.task.*;
 import br.com.project.repository.TaskBankRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -122,5 +123,21 @@ public class TaskBankService {
             }
         }
         return result;
+    }
+
+    public void addCSVSubTask(Long taskId, String subtask) {
+//        getTaskById(taskId).addAllSubTask(TaskFactory.getSubTaskList(subtask));
+//        taskBankRepository.save(new RealTask());
+    }
+
+    public void addTaskWithSubTask(String bankName, RealTask task, String subtask) {
+        TaskBank taskBank = findByName(bankName);
+        List<SubTask> subTaskList = TaskFactory.getSubTaskList(subtask);
+        System.out.println(subtask);
+        System.out.println(subTaskList);
+        task.addAllSubTask(subTaskList);
+        taskBank.addTask(task);
+        taskBankRepository.save(taskBank);
+        System.out.println(task);
     }
 }

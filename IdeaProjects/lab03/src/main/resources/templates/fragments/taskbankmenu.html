@@ -10,6 +10,7 @@
     <div th:fragment="taskBankMenu">
         <ul>
             <li>Task Bank <a th:href="@{'/task/newTaskBank'}" th:text="'+'"></a></li>
+            <li><a th:href="@{'/task/allTasks'}" th:text="'All'"></a></li>
             <li th:each="taskBank : ${taskBankList}"><a th:href="@{'/task/taskListByBank?bankName=' + ${taskBank}}" th:text="${taskBank}"></a></li>
         </ul>
     </div>

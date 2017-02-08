@@ -7,10 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,12 +60,14 @@ public class TaskController {
     @RequestMapping(value = "/allTasks", method = RequestMethod.GET)
     public String allTasks(ModelMap model) {
         setTaskList(taskBankService.getAllTasks());
+        model.addAttribute("listName", "ALL TASKS");
         return "redirect:/task/taskList";
     }
 
     @RequestMapping(value = "/taskListByBank", method = RequestMethod.GET)
     public String taskListByBank(String bankName, Model model) {
         setTaskList(taskBankService.getTasksByBank(bankName));
+        model.addAttribute("listName", bankName.toUpperCase());
 
         return "redirect:/task/taskList";
     }
@@ -73,6 +75,7 @@ public class TaskController {
     @RequestMapping(value = "/taskListByCategory", method = RequestMethod.GET)
     public String taskListByCategory(String category, Model model) {
         setTaskList(taskBankService.getTasksByCategory(category));
+        model.addAttribute("listName", category.toUpperCase());
         return "redirect:/task/taskList";
     }
 
@@ -80,6 +83,7 @@ public class TaskController {
     @RequestMapping(value = "/taskListByPriority", method = RequestMethod.GET)
     public String taskListByPriority(String priority, Model model) {
         setTaskList(taskBankService.getTasksByPriority(priority));
+        model.addAttribute("listName", priority.toUpperCase());
 
         return "redirect:/task/taskList";
     }
@@ -108,12 +112,7 @@ public class TaskController {
 
     @RequestMapping(value = "/addRealTask", method = RequestMethod.POST)
     public String addTask(@ModelAttribute RealTask task, String bankName, String subtask, Model  model) {
-
-        System.out.println("########" + model.containsAttribute("subtask"));
-        System.out.println("########" + subtask);
-
-        taskBankService.addTask(bankName, task);
-
+        taskBankService.addTaskWithSubTask(bankName, task, subtask);
         return "redirect:/task/allTasks";
     }
 

@@ -1,13 +1,12 @@
 package br.com.project.model.task;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.SequenceGenerator;
+import javax.persistence.*;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by gersonsales on 04/02/17.
@@ -19,15 +18,13 @@ public abstract class Task {
     @SequenceGenerator(name="STORE_SEQ",sequenceName="STORE_SEQ", allocationSize=1)
     private Long id;
     private String title;
-    private String description;
     private boolean checked;
     private Date creationDate;
     private Calendar checkDate;
 
-    public Task(String title, String description) {
+    public Task(String title) {
         this();
         this.title = title;
-        this.description = description;
     }
 
     public Task() {
@@ -49,14 +46,6 @@ public abstract class Task {
 
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
     }
 
     public boolean isChecked() {
@@ -84,4 +73,10 @@ public abstract class Task {
     }
 
 
+    @Override
+    public String toString() {
+        return "Task{" +
+                "title='" + title + '\'' +
+                '}';
+    }
 }
