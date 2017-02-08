@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Menu</title>
+</head>
+<body>
+
+    <div th:fragment="menu">
+
+        <ul>
+            <li><a th:href="@{allTasks}" th:text="taskList"></a></li>
+            <li><a th:href="@{taskBankList}" th:text="taskBankList"></a></li>
+            <li><a th:href="@{newRealTask}" th:text="newRealTask"></a></li>
+            <li><a th:href="@{newTaskBank}" th:text="newTaskBank"></a></li>
+            <li><a th:href="@{contactUs}" th:text="'Contact us'"></a></li>
+        </ul>
+
+    </div>
+
+
+</body>
+</html>

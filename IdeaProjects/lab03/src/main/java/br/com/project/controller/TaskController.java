@@ -2,17 +2,16 @@ package br.com.project.controller;
 
 import br.com.project.model.task.RealTask;
 import br.com.project.model.task.Task;
+import br.com.project.model.task.TaskListShown;
 import br.com.project.service.TaskBankService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -26,21 +25,23 @@ public class TaskController {
     @Autowired
     private TaskBankService taskBankService;
 
-    private List<Task> taskList;
+//    private List<Task> taskList;
+    private TaskListShown taskListShown;
 
     public TaskController() {
-        this.taskList = new ArrayList<>();
+//        this.taskList = new ArrayList<>();
+        taskListShown= new TaskListShown();
     }
 
     @ModelAttribute("taskList")
-    List<Task> getTaskList() {
-        return this.taskList;
+    TaskListShown getTaskList() {
+        return this.taskListShown;
     }
 
-    void setTaskList(List<Task> taskList) {
-        this.taskList.clear();
-        this.taskList.addAll(taskList);
-    }
+//    void setTaskList(List<Task> taskList) {
+//        this.taskList.clear();
+//        this.taskList.addAll(taskList);
+//    }
 
     @RequestMapping(value = "", method = RequestMethod.GET)
     public String taskIndex() {
@@ -53,20 +54,21 @@ public class TaskController {
         model.addAttribute("priorityList", taskBankService.getPriorities());
         model.addAttribute("taskBankList", taskBankService.getBankNames());
         model.addAttribute("priorityList", taskBankService.getPriorities());
+        System.out.println(taskListShown);
 
         return "tasklist";
     }
 
     @RequestMapping(value = "/allTasks", method = RequestMethod.GET)
     public String allTasks(ModelMap model) {
-        setTaskList(taskBankService.getAllTasks());
+        taskListShown.updateList(taskBankService.getAllTasks());
         model.addAttribute("listName", "ALL TASKS");
         return "redirect:/task/taskList";
     }
 
     @RequestMapping(value = "/taskListByBank", method = RequestMethod.GET)
     public String taskListByBank(String bankName, Model model) {
-        setTaskList(taskBankService.getTasksByBank(bankName));
+        taskListShown.updateList(taskBankService.getTasksByBank(bankName));
         model.addAttribute("listName", bankName.toUpperCase());
 
         return "redirect:/task/taskList";
@@ -74,7 +76,7 @@ public class TaskController {
 
     @RequestMapping(value = "/taskListByCategory", method = RequestMethod.GET)
     public String taskListByCategory(String category, Model model) {
-        setTaskList(taskBankService.getTasksByCategory(category));
+        taskListShown.updateList(taskBankService.getTasksByCategory(category));
         model.addAttribute("listName", category.toUpperCase());
         return "redirect:/task/taskList";
     }
@@ -82,7 +84,7 @@ public class TaskController {
 
     @RequestMapping(value = "/taskListByPriority", method = RequestMethod.GET)
     public String taskListByPriority(String priority, Model model) {
-        setTaskList(taskBankService.getTasksByPriority(priority));
+        taskListShown.updateList(taskBankService.getTasksByPriority(priority));
         model.addAttribute("listName", priority.toUpperCase());
 
         return "redirect:/task/taskList";
@@ -90,8 +92,8 @@ public class TaskController {
 
     @RequestMapping(value = "/newRealTask", method = RequestMethod.GET)
     public String newTask(Model model) {
-        Set<String> bankNames = taskBankService.getBankNames();
-        Set<String> categoryList = taskBankService.getCategories();
+        List<String> bankNames = taskBankService.getBankNames();
+        List<String> categoryList = taskBankService.getCategories();
 
         model.addAttribute("bankNames", bankNames);
         model.addAttribute("categoryList", categoryList);
@@ -144,7 +146,19 @@ public class TaskController {
     @RequestMapping(value = "/contactUs", method = RequestMethod.GET)
     public String addTaskBank() {
         return "contactus";
+    }
 
+
+    @RequestMapping(value = "/sortByName", method = RequestMethod.GET)
+    public String sortListByName() {
+        taskListShown.sortByName();
+        return "redirect:/task/taskList";
+    }
+
+    @RequestMapping(value = "/sortByPriority", method = RequestMethod.GET)
+    public String sortListByPriority() {
+        taskListShown.sortByPriority();
+        return "redirect:/task/taskList";
     }
 
 

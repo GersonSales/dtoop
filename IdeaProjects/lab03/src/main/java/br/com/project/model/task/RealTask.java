@@ -58,9 +58,9 @@ public class RealTask extends Task{
         return "RealTask{" +
                 "category='" + category + '\'' +
                 ", priority=" + priority +
-                ", description='" + description + '\'' +
+                ", description='" + description + '\''/* +
                 ", subTaskList=" + subTaskList +
-                '}';
+                '}'*/;
     }
 
     public boolean isThatCategory(String category) {

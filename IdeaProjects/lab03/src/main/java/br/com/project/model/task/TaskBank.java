@@ -8,7 +8,7 @@ import java.util.List;
  * Created by gersonsales on 05/02/17.
  */
 @Entity
-public class TaskBank {
+public class TaskBank implements Comparable<TaskBank>{
     @Id
     @GeneratedValue(generator="STORE_SEQ")
     @SequenceGenerator(name="STORE_SEQ",sequenceName="STORE_SEQ", allocationSize=1)
@@ -16,7 +16,7 @@ public class TaskBank {
     private String name;
 
     @OneToMany(cascade = {CascadeType.ALL})
-    private List<Task> taskList;
+    private List<RealTask> taskList;
 
 
 
@@ -29,7 +29,7 @@ public class TaskBank {
         this.name = name;
     }
 
-    public void addTask(Task task) {
+    public void addTask(RealTask task) {
         taskList.add(task);
     }
 
@@ -47,7 +47,7 @@ public class TaskBank {
         return  null;
     }
 
-    public void updateTask(Task task) {
+    public void updateTask(RealTask task) {
         Task foundTask = getTaskById(task.getId());
         if (foundTask != null) {
             taskList.remove(foundTask);
@@ -57,7 +57,7 @@ public class TaskBank {
 
 
 
-    public List<Task> getAllTasks() {
+    public List<RealTask> getAllTasks() {
         return taskList;
     }
 
@@ -78,5 +78,30 @@ public class TaskBank {
                 ", name='" + name + '\'' +
                 ", taskList=" + taskList +
                 '}';
+    }
+
+    @Override
+    public int compareTo(TaskBank otherTaskBank) {
+        return getName().compareTo(otherTaskBank.getName());
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof TaskBank)) return false;
+
+        TaskBank taskBank = (TaskBank) o;
+
+        return getName().equals(taskBank.getName());
+
+    }
+
+    @Override
+    public int hashCode() {
+        return getName().hashCode();
     }
 }

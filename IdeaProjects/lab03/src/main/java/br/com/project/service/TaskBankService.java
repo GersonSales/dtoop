@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Created by gersonsales on 06/02/17.
@@ -25,7 +26,10 @@ public class TaskBankService {
 
     public void addBank(String bankName) {
         TaskBank taskBank = new TaskBank(bankName);
-        taskBankRepository.save(taskBank);
+        if (!taskBankRepository.findAll().contains(taskBank)) {
+            taskBankRepository.save(taskBank);
+        }
+
     }
 
     public TaskBank findByName(String bankName) {
@@ -33,8 +37,8 @@ public class TaskBankService {
     }
 
 
-    public List<Task> getAllTasks() {
-        List<Task> allTasks = new ArrayList<>();
+    public List<RealTask> getAllTasks() {
+        List<RealTask> allTasks = new ArrayList<>();
         for (TaskBank taskBank : taskBankRepository.findAll()){
             allTasks.addAll(taskBank.getAllTasks());
         }
@@ -50,11 +54,11 @@ public class TaskBankService {
 
     }
 
-    public Set<String> getBankNames() {
-        Set<String> bankNames = new HashSet<>();
-        for (TaskBank taskBank : taskBankRepository.findAll()) {
-            bankNames.add(taskBank.getName());
-        }
+    public List<String> getBankNames() {
+        List<TaskBank> taskBankList = taskBankRepository.findAll();
+        List<String> bankNames = taskBankList.stream().map(TaskBank::getName).collect(Collectors.toList());
+        Collections.sort(bankNames);
+
 
         return bankNames;
     }
@@ -81,13 +85,13 @@ public class TaskBankService {
     }
 
 
-    public List<Task> getTasksByBank(String bankName) {
+    public List<RealTask> getTasksByBank(String bankName) {
         TaskBank taskBank = taskBankRepository.findByName(bankName);
         return taskBank.getAllTasks();
     }
 
-    public List<Task> getTasksByCategory(String category) {
-        List<Task> result = new ArrayList<>();
+    public List<RealTask> getTasksByCategory(String category) {
+        List<RealTask> result = new ArrayList<>();
         for (Task task : getAllTasks()) {
             if (task instanceof RealTask) {
                 RealTask realTask = (RealTask)task;
@@ -104,16 +108,18 @@ public class TaskBankService {
         categoryList.add(category);
     }
 
-    public Set<String> getCategories() {
-        return categoryList;
+    public List<String> getCategories() {
+        List<String> bankNames = categoryList.stream().collect(Collectors.toList());
+        Collections.sort(bankNames);
+        return bankNames;
     }
 
     public List<Priority> getPriorities() {
         return Arrays.asList(Priority.values());
     }
 
-    public List<Task> getTasksByPriority(String priority) {
-        List<Task> result = new ArrayList<>();
+    public List<RealTask> getTasksByPriority(String priority) {
+        List<RealTask> result = new ArrayList<>();
         for (Task task : getAllTasks()) {
             if (task instanceof RealTask) {
                 RealTask realTask = (RealTask)task;

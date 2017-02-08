@@ -12,7 +12,7 @@ import java.util.List;
  * Created by gersonsales on 04/02/17.
  */
 @Entity
-public abstract class Task {
+public abstract class Task implements Comparable<Task>{
     @Id
     @GeneratedValue(generator="STORE_SEQ")
     @SequenceGenerator(name="STORE_SEQ",sequenceName="STORE_SEQ", allocationSize=1)
@@ -70,6 +70,10 @@ public abstract class Task {
 
     public void setCheckDate(Calendar checkDate) {
         this.checkDate = checkDate;
+    }
+
+    public int compareTo(Task otherTask) {
+        return title.compareTo(otherTask.getTitle());
     }
 
 

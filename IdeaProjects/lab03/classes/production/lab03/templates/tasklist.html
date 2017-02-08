@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" ng-app="todoApp">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" ng-app="">
 <head>
     <meta charset="UTF-8"/>
     <title>Task List</title>
@@ -24,7 +24,7 @@
             <td>Action</td>
         </thead>
 
-        <tbody ng-controller="appController">
+        <tbody>
             <tr th:each="task : ${taskList}">
                 <td th:text="${task.id}"></td>
                 <td><a th:href="@{'/task/showRealTask?id=' + ${task.id}}" th:text="${task.title}"></a></td>
@@ -36,7 +36,7 @@
 
                 <td><a th:href="@{'/task/showRealTask?id=' + ${task.id}}">Edit</a></td>
                 <td><a th:href="@{'/task/removeRealTask?id=' + ${task.id}}">Remove</a></td>
-                <td><input type="checkbox" th:attr="ng-model='${task.checked}'"/></td>
+                <td><input type="checkbox" ng-model="task.checked"/></td>ng-click="addTodo()"
 
             </tr>
 

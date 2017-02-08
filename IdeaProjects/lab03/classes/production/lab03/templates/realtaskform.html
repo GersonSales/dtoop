@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <!--<meta charset="UTF-8"/>-->
+    <title>Real Task Form</title>
+    <th:block th:include="fragments/menu :: menu"></th:block>
+    <script src="../static/js/functions.js.js" th:href="@{/js/functions.js}"></script>
+
+
+</head>
+<body>
+
+    <form th:action="@{addRealTask}" method="post">
+        <input type="hidden" name="id"/>
+        <input type="text" placeholder="Title" name="title"/>
+        <textarea name="description">Description</textarea>
+
+        <select name="bankName">
+            <option th:each="bank : ${bankNames}" th:value="${bank}" th:text="${bank}"></option>
+        </select>
+
+        <select name="category">
+            <option th:each="category : ${categoryList}" th:value="${category}" th:text="${category}"></option>
+        </select>
+
+
+        <select name="priority">
+            <!--disabled=""-->
+            <option value="NONE" selected="">Priority</option>
+
+            <option value="LOW">Low</option>
+            <option value="MEDIUM">Medium</option>
+            <option value="HIGH">High</option>
+
+        </select>
+
+        <th:block th:include="fragments/subtaskform :: subTaskForm"></th:block>
+
+
+        <input type="submit" value="Save"/>
+    </form>
+
+</body>
+</html>
