@@ -15,8 +15,17 @@ public class TaskListShown implements Iterable {
         this.taskList = new ArrayList<>();
     }
 
+    public RealTask getTaskById(Long id) {
+        for (RealTask realTask : taskList) {
+            if (realTask.getId().equals(id)) {
+                return realTask;
+            }
+        }
+        return null;
+    }
+
     public void sortByName() {
-        taskList.sort((item1, item2) -> item1.compareTo(item2));
+        taskList.sort(Task::compareTo);
     }
 
     public void sortByPriority() {
@@ -39,5 +48,9 @@ public class TaskListShown implements Iterable {
         return "TaskListShown{" +
                 "taskList=" + taskList +
                 '}';
+    }
+
+    public void checkTaskById(Long id) {
+        getTaskById(id).setChecked(true);
     }
 }

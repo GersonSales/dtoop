@@ -76,11 +76,12 @@ public abstract class Task implements Comparable<Task>{
         return title.compareTo(otherTask.getTitle());
     }
 
-
     @Override
     public String toString() {
         return "Task{" +
-                "title='" + title + '\'' +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", checked=" + checked +
                 '}';
     }
 }

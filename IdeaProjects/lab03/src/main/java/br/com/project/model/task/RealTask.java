@@ -55,7 +55,7 @@ public class RealTask extends Task{
 
     @Override
     public String toString() {
-        return "RealTask{" +
+        return super.toString() + "RealTask{" +
                 "category='" + category + '\'' +
                 ", priority=" + priority +
                 ", description='" + description + '\''/* +

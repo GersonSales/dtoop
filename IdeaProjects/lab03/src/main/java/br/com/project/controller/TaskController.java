@@ -54,7 +54,6 @@ public class TaskController {
         model.addAttribute("priorityList", taskBankService.getPriorities());
         model.addAttribute("taskBankList", taskBankService.getBankNames());
         model.addAttribute("priorityList", taskBankService.getPriorities());
-        System.out.println(taskListShown);
 
         return "tasklist";
     }
@@ -130,6 +129,15 @@ public class TaskController {
         return "redirect:/task/allTasks";
     }
 
+    @RequestMapping(value = "/checkTask", method = RequestMethod.GET)
+    public String checkTask(Long id, Model model) {
+        taskBankService.checkTaskById(id);
+        taskListShown.checkTaskById(id);
+
+
+        return "forward:/task/taskList";
+    }
+
 
     @RequestMapping(value = "/newTaskBank", method = RequestMethod.GET)
     public String newTaskBank() {
@@ -160,6 +168,8 @@ public class TaskController {
         taskListShown.sortByPriority();
         return "redirect:/task/taskList";
     }
+
+
 
 
 }
