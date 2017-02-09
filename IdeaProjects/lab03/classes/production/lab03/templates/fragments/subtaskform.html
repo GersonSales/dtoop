@@ -7,7 +7,22 @@
 <body>
 
 <div th:fragment="subTaskForm">
-    <input type="text" name="subtask" th:each="i : ${#numbers.sequence( 1, 3)}"/>
+
+    <input type="hidden" th:value="${subTaskNumber}" name="moreSubtask"/>
+
+    <div class="form-group">
+        <label for="subtask">SubTasks
+            <a th:href="@{'/task/addSubTask?subTaskNumber=' + ${subTaskNumber}}">
+                <span class="glyphicon glyphicon-plus" aria-hidden="false"></span>
+            </a>
+        </label>
+        <input th:each="i : ${#numbers.sequence( 1, subTaskNumber)}"
+               type="text" class="form-control" id="subtask"
+               th:placeholder="'SubTask ' + ${i}"
+               name="subtask"/>
+    </div>
+
+    <!--th:each="i : ${new int[subTaskNumber]}-->
 </div>
 </body>
 </html>

@@ -96,6 +96,7 @@ public class TaskController {
 
         model.addAttribute("bankNames", bankNames);
         model.addAttribute("categoryList", categoryList);
+        model.addAttribute("subTaskNumber", 1);
         return "realtaskform";
     }
 
@@ -115,6 +116,16 @@ public class TaskController {
     public String addTask(@ModelAttribute RealTask task, String bankName, String subtask, Model  model) {
         taskBankService.addTaskWithSubTask(bankName, task, subtask);
         return "redirect:/task/allTasks";
+    }
+
+    @RequestMapping(value = "/addSubTask", method = RequestMethod.GET)
+    public String addSubTask(String subTaskNumber, Model model) {
+        System.out.println("HERE: " + model.containsAttribute("title"));
+        model.addAttribute("subTaskNumber", Integer.valueOf(subTaskNumber) + 1);
+//        model.addAttribute("subtaskNumber", moreSubtask++);
+
+
+        return "realtaskform";
     }
 
     @RequestMapping(value = "/showRealTask", method = RequestMethod.GET)

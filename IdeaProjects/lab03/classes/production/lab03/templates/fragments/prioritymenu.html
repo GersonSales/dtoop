@@ -6,9 +6,9 @@
 </head>
 <body>
     <div th:fragment="priorityMenu">
-        <ul>
-            <li>Priorities</li>
-            <li th:each="priority : ${priorityList}"><a th:href="@{'/task/taskListByPriority?priority=' + ${priority}}" th:text="${priority}"></a></li>
+        <ul class="list-group list-unstyled">
+            <li class="list-group-item active">Priorities</li>
+            <li th:each="priority : ${priorityList}"><a class="list-group-item" th:href="@{'/task/taskListByPriority?priority=' + ${priority}}" th:text="${priority}"></a></li>
         </ul>
     </div>
 
