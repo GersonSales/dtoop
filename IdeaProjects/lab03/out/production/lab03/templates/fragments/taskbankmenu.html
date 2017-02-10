@@ -9,6 +9,8 @@
 
     <div th:fragment="taskBankMenu">
         <ul class="list-group list-unstyled">
+            <!--<li class="list-group-item active">Task Bank</li>-->
+
             <li class="list-group-item active">Task Bank
                 <a href="#" onclick="document.getElementById('taskBankPop').style.display='block';">
                     <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
@@ -22,12 +24,29 @@
 
 
             </li>
-            <li><a class="list-group-item" th:href="@{'/task/allTasks'}" th:text="'All'"></a></li>
-            <li th:each="taskBank : ${taskBankList}" class="row">
-                <a class="list-group-item col-xs-5" th:href="@{'/task/taskListByBank?bankName=' + ${taskBank}}" th:text="${taskBank}"></a>
-                <a class="col-xs-2" th:href="@{'/task/removeTaskBank?taskBank=' + ${taskBank}}">
-                    <span class="glyphicon glyphicon-remove" aria-hidden="false" style="padding-top: 11.5px"></span>
+
+            <li class="list-group-item">
+                <a th:href="@{'/task/removeAllTasks'}">
+                    <span class="glyphicon glyphicon-trash" aria-hidden="false"></span>
                 </a>
+                <a th:href="@{'/task/allTasks'}" th:text="'All'" style="padding-left: 10px"></a>
+
+            </li>
+
+            <li class="list-group-item">
+                <a th:href="@{'/task/checkAllTasks'}">
+                    <span class="glyphicon glyphicon-ok" aria-hidden="false"></span>
+                </a>
+                <a th:href="@{'/task/uncheckedTasks'}" th:text="'TODO'" style="padding-left: 10px"></a>
+
+            </li>
+
+
+            <li th:each="taskBank : ${taskBankList}" class="list-group-item">
+                <a th:href="@{'/task/removeTaskBank?taskBank=' + ${taskBank}}">
+                    <span class="glyphicon glyphicon-remove" aria-hidden="false"></span>
+                </a>
+                <a th:href="@{'/task/taskListByBank?bankName=' + ${taskBank}}" th:text="${taskBank}" style="padding-left: 10px"></a>
             </li>
 
         </ul>

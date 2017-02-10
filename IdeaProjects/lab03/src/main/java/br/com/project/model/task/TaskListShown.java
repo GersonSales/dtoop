@@ -57,4 +57,10 @@ public class TaskListShown implements Iterable {
     public void checkTaskById(Long id) {
         getTaskById(id).setChecked(true);
     }
+
+    public void checkSubTaskById(Long id) {
+        for (RealTask task : taskList) {
+            task.checkSubTask(id);
+        }
+    }
 }

@@ -151,13 +151,23 @@ public class TaskBankService {
         updateBank();
     }
 
-    public Integer getUncheckedTasks() {
-        int result = 0;
-        for (Task task : getAllTasks()) {
-            result = task.isChecked() ? result : ++result;
+
+    private SubTask getSubTaskById(Long id) {
+        for (RealTask realTask : getAllTasks()) {
+            SubTask subTask = realTask.getSubTaskById(id);
+            if (subTask != null) {
+                return subTask;
+            }
         }
-        return result;
+        return null;
     }
+
+    public void checkSubTaskById(Long id) {
+        getSubTaskById(id).setChecked(true);
+        updateBank();
+    }
+
+
 
     public void removeTaskBank(String bankName) {
         TaskBank taskBank = findByName(bankName);
@@ -168,5 +178,38 @@ public class TaskBankService {
         taskBankRepository.findAll().forEach(TaskBank::removeAllTasks);
         taskBankRepository.findAll().forEach(taskBankRepository::save);
 
+    }
+
+
+    public Long getTaskId(Long id) {
+        for (RealTask realTask : getAllTasks()) {
+            if (realTask.containsSubtask(id)) {
+                return realTask.getId();
+            }
+        }
+        return null;
+
+    }
+
+    public List<RealTask> getUncheckedTasks() {
+        List<RealTask> uncheckedTasks = new ArrayList<>();
+        for (RealTask task : getAllTasks()) {
+            if (!task.isChecked()) {
+                uncheckedTasks.add(task);
+            }
+        }
+        return uncheckedTasks;
+
+    }
+
+    public Integer getQtdUncheckedTasks() {
+        return getUncheckedTasks().size();
+    }
+
+    public void checkAllTasks() {
+        for (Task task : getAllTasks()) {
+            task.setChecked(true);
+        }
+        updateBank();
     }
 }

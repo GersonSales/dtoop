@@ -2,6 +2,7 @@ package br.com.project.model.task;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -83,4 +84,27 @@ public class RealTask extends Task{
     public void setSubTaskList(List<SubTask> subTaskList) {
         this.subTaskList = subTaskList;
     }
+
+
+    public SubTask getSubTaskById(Long id) {
+        for (SubTask subTask: subTaskList) {
+            if (subTask.getId().equals(id)) {
+                return subTask;
+            }
+        }
+        return null;
+
+    }
+
+    public void checkSubTask(Long id) {
+        SubTask subTask = getSubTaskById(id);
+        if (subTask != null) {
+            subTask.setChecked(true);
+        }
+    }
+
+    public boolean containsSubtask(Long id) {
+        return getSubTaskById(id) != null;
+    }
+
 }

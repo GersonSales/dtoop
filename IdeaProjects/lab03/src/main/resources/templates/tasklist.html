@@ -33,9 +33,11 @@
             </thead>
 
         <tbody>
-                <tr th:each="task : ${taskList}">
+                <tr th:each="task : ${taskList}" >
                     <td>
-                        <a th:href="@{'/task/showRealTask?id=' + ${task.id}}" th:text="${task.title}"></a>
+                        <a th:href="@{'/task/showRealTask?id=' + ${task.id}}">
+                            <span th:text="${task.title}" th:class="'checked-' + ${task.checked}"></span>
+                        </a>
 
                         <!--<a href="#" onclick="document.getElementById('51').style.display='block';">-->
                             <!--<span th:text="${task.title}"></span>-->

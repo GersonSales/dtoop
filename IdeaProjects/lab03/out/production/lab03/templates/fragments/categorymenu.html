@@ -17,12 +17,10 @@
                     <br />
                     <th:block th:include="./categoryform :: categoryForm"></th:block>
                 </div>
-
-
-
-
             </li>
-            <li th:each="category : ${categoryList}"><a class="list-group-item" th:href="@{'/task/taskListByCategory?category=' + ${category}}" th:text="${category}"></a></li>
+            <li th:each="category : ${categoryList}" class="list-group-item" >
+                <a th:href="@{'/task/taskListByCategory?category=' + ${category}}" th:text="${category}"></a>
+            </li>
         </ul>
     </div>
 </body>

@@ -20,7 +20,7 @@ public abstract class Task implements Comparable<Task>{
     private String title;
     private boolean checked;
     private Date creationDate;
-    private Calendar checkDate;
+    private Date checkDate;
 
     public Task(String title) {
         this();
@@ -53,6 +53,7 @@ public abstract class Task implements Comparable<Task>{
     }
 
     public void setChecked(boolean checked) {
+        this.checkDate = new Date();
         this.checked = checked;
     }
 
@@ -64,11 +65,11 @@ public abstract class Task implements Comparable<Task>{
         this.creationDate = creationDate;
     }
 
-    public Calendar getCheckDate() {
+    public Date getCheckDate() {
         return checkDate;
     }
 
-    public void setCheckDate(Calendar checkDate) {
+    public void setCheckDate(Date checkDate) {
         this.checkDate = checkDate;
     }
 
@@ -84,4 +85,5 @@ public abstract class Task implements Comparable<Task>{
                 ", checked=" + checked +
                 '}';
     }
+
 }

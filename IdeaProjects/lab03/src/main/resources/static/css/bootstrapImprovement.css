@@ -65,3 +65,19 @@ div[id$="51"]{
     background: rgba(0, 0, 0, 0.73);
     text-decoration-color: white;
 }
+
+span.checked-true {
+    text-decoration: line-through;
+}
+
+label.priority-High {
+    color: #d43f3a;
+}
+
+label.priority-Medium {
+    color: gold;
+}
+
+label.priority-Low {
+    color: lightgreen;
+}
