@@ -109,9 +109,11 @@ public class TaskBankService {
     }
 
     public List<String> getCategories() {
-        List<String> bankNames = categoryList.stream().collect(Collectors.toList());
-        Collections.sort(bankNames);
-        return bankNames;
+//        taskBankList.stream().map(TaskBank::getName).collect(Collectors.toList());
+        categoryList.addAll(getAllTasks().stream().map(RealTask::getCategory).collect(Collectors.toSet()));
+        List<String> categories = categoryList.stream().collect(Collectors.toList());
+        Collections.sort(categories);
+        return categories;
     }
 
     public List<Priority> getPriorities() {
@@ -133,7 +135,6 @@ public class TaskBankService {
 
 
     public void addTaskWithSubTask(String bankName, RealTask task, String subtask) {
-        System.out.println("<---RealTask--->" + task);
         TaskBank taskBank = findByName(bankName);
         List<SubTask> subTaskList = TaskFactory.getSubTaskList(subtask);
         task.addAllSubTask(subTaskList);
@@ -148,5 +149,24 @@ public class TaskBankService {
     public void checkTaskById(Long id) {
         getTaskById(id).setChecked(true);
         updateBank();
+    }
+
+    public Integer getUncheckedTasks() {
+        int result = 0;
+        for (Task task : getAllTasks()) {
+            result = task.isChecked() ? result : ++result;
+        }
+        return result;
+    }
+
+    public void removeTaskBank(String bankName) {
+        TaskBank taskBank = findByName(bankName);
+        taskBankRepository.delete(taskBank);
+    }
+
+    public void removeAllTasks() {
+        taskBankRepository.findAll().forEach(TaskBank::removeAllTasks);
+        taskBankRepository.findAll().forEach(taskBankRepository::save);
+
     }
 }

@@ -13,4 +13,9 @@ public class SubTask extends Task{
 
     public SubTask() {
     }
+
+    @Override
+    public String toString() {
+        return "";
+    }
 }

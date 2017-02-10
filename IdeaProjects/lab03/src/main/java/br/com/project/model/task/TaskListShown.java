@@ -15,6 +15,10 @@ public class TaskListShown implements Iterable {
         this.taskList = new ArrayList<>();
     }
 
+
+    public List<RealTask> getTaskList() {
+        return taskList;
+    }
     public RealTask getTaskById(Long id) {
         for (RealTask realTask : taskList) {
             if (realTask.getId().equals(id)) {

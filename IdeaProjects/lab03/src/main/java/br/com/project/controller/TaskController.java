@@ -1,7 +1,6 @@
 package br.com.project.controller;
 
 import br.com.project.model.task.RealTask;
-import br.com.project.model.task.Task;
 import br.com.project.model.task.TaskListShown;
 import br.com.project.service.TaskBankService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.util.List;
-import java.util.Set;
 
 /**
  * Created by gersonsales on 04/02/17.
@@ -34,8 +32,8 @@ public class TaskController {
     }
 
     @ModelAttribute("taskList")
-    TaskListShown getTaskList() {
-        return this.taskListShown;
+    List<RealTask> getTaskList() {
+        return this.taskListShown.getTaskList();
     }
 
 //    void setTaskList(List<Task> taskList) {
@@ -54,6 +52,7 @@ public class TaskController {
         model.addAttribute("priorityList", taskBankService.getPriorities());
         model.addAttribute("taskBankList", taskBankService.getBankNames());
         model.addAttribute("priorityList", taskBankService.getPriorities());
+        model.addAttribute("uncheckedTask", taskBankService.getUncheckedTasks());
 
         return "tasklist";
     }
@@ -119,18 +118,39 @@ public class TaskController {
     }
 
     @RequestMapping(value = "/addSubTask", method = RequestMethod.GET)
-    public String addSubTask(String subTaskNumber, Model model) {
+    public String addSubTask(String subTaskNumber, String title, Model model) {
         System.out.println("HERE: " + model.containsAttribute("title"));
+        System.out.println("HERE: " + title);
         model.addAttribute("subTaskNumber", Integer.valueOf(subTaskNumber) + 1);
-//        model.addAttribute("subtaskNumber", moreSubtask++);
+        return "realtaskform";
+    }
 
+    @RequestMapping(value = "/removeSubTask", method = RequestMethod.GET)
+    public String removeSubTask(String subTaskNumber, Model model) {
+        Integer newValue = Integer.valueOf(subTaskNumber) - 1;
+        model.addAttribute("subTaskNumber", newValue > 0 ? newValue : 1);
 
         return "realtaskform";
     }
 
+    @RequestMapping(value = "/removeTaskBank", method = RequestMethod.GET)
+    public String removeTaskBank(String taskBank) {
+        System.out.println("#####BANK NAME: " + taskBank);
+        taskBankService.removeTaskBank(taskBank);
+        return "redirect:/task/allTasks";
+
+    }
+
+    @RequestMapping(value = "/removeAllTasks", method = RequestMethod.GET)
+    public String removeAllTasks() {
+        taskBankService.removeAllTasks();
+
+        return "redirect:/task/allTasks";
+    }
+
     @RequestMapping(value = "/showRealTask", method = RequestMethod.GET)
     public String showRealTask(Long id, Model model) {
-        model.addAttribute("realTask", taskBankService.getTaskById(id));
+        model.addAttribute("task", taskBankService.getTaskById(id));
         return "showrealtask";
     }
 

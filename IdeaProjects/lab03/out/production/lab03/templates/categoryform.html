@@ -7,11 +7,21 @@
 
 </head>
 <body>
-    <h1>Category Form</h1>
-    <form th:action="@{addCategory}" method="post">
-        <input type="text" name="category" placeholder="Category"/>
-        <input type="submit" value="Create"/>
-    </form>
+<div th:fragment="categoryForm" class="form-group">
+
+    <div class="row"  style="padding-left: 10px">
+        <form th:action="@{addCategory}" method="post">
+            <div class="col-xs-7" style="padding: 1px">
+                <input type="text" class="form-control" id="category" placeholder="Category" name="category"/>
+            </div>
+            <div class="col-xs-3" style="padding: 1px">
+                <input type="submit" value="Create" class="btn btn-primary"/>
+            </div>
+
+        </form>
+    </div>
+
+</div>
 
 </body>
 </html>

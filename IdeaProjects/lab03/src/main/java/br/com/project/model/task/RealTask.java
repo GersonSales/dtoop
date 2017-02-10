@@ -14,11 +14,12 @@ public class RealTask extends Task{
     private String description;
 
 
-    @OneToMany(cascade = {CascadeType.ALL})
+    @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
     private List<SubTask> subTaskList;
 
     public RealTask(String title, String description, String category, Priority priority) {
         super(title);
+        this.description = description;
         this.category = category;
         this.priority = priority;
     }
@@ -58,9 +59,9 @@ public class RealTask extends Task{
         return super.toString() + "RealTask{" +
                 "category='" + category + '\'' +
                 ", priority=" + priority +
-                ", description='" + description + '\''/* +
-                ", subTaskList=" + subTaskList +
-                '}'*/;
+                ", description='" + description + '\'' +
+                ", subTaskList=" + subTaskList.toString() +
+                '}';
     }
 
     public boolean isThatCategory(String category) {

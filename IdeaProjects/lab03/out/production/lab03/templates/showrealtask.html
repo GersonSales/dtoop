@@ -7,24 +7,26 @@
     <th:block th:include="/general/head :: head"></th:block>
 </head>
 <body>
+<div th:fragment="showRealTask" style="text-decoration-color: white">
     <h2>
-        [<label th:text="${realTask.category}"></label>]
-        <label th:text="${realTask.title}"></label>
-        <input type="checkbox" th:attr="ng-click='${realTask.checked}'"/>
-        <label th:text="${realTask.priority}"></label>
+        [<label th:text="${task.category}"></label>]
+        <label th:text="${task.title}"></label>
+        <input type="checkbox" th:attr="ng-click='${task.checked}'"/>
+        <label th:text="${task.priority}"></label>
     </h2>
-    <label th:text="${realTask.creationDate}"></label>
+    <!--<label th:text="${task.creationDate}"></label>-->
 
 
     <hr/>
-    <h4 th:text="${realTask.description}"></h4>
+    <h4 th:text="${task.description}"></h4>
     <hr/>
     <ul>
-        <li th:each="subTask : ${realTask.subTaskList}">
+        <li th:each="subTask : ${task.subTaskList}">
             <label th:text="${subTask.title}"></label>
             <input type="checkbox" name="name" th:checked="${subTask.checked}"/>
         </li>
     </ul>
 
+</div>
 </body>
 </html>

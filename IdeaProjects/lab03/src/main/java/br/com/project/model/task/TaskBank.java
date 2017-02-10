@@ -100,8 +100,14 @@ public class TaskBank implements Comparable<TaskBank>{
 
     }
 
+
+
     @Override
     public int hashCode() {
         return getName().hashCode();
+    }
+
+    public void removeAllTasks() {
+        this.taskList.clear();
     }
 }
